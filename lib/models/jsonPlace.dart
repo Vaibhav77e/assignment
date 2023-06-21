@@ -1,6 +1,8 @@
 class JsonPlace {
+  String id;
   String title;
-  String imageUrl;
+  String thumbnailUrl;
 
-  JsonPlace({required this.imageUrl, required this.title});
+  JsonPlace(
+      {required this.id, required this.thumbnailUrl, required this.title});
 }
