@@ -28,7 +28,7 @@ void showDialogBox(
             onPressed: onPressed,
             child: const Text(
               'Add',
-            ))
+            )),
       ],
     ),
   );

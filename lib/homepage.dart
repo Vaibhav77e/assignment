@@ -1,6 +1,9 @@
 import 'package:assgin_ui/widgets/listdata.dart';
 import 'package:assgin_ui/widgets/showDialog.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import './service/request.dart';
+import './widgets/searchbar_ui.dart';
 
 class Homepage extends StatelessWidget {
   Homepage({super.key});
@@ -8,6 +11,8 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<RequestData>(context);
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -32,63 +37,32 @@ class Homepage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        //  alignment: Alignment.center,
                         height: 125,
                         child: Image.asset(
                           'assets/credit_card_rbg.png',
-                          //  alignment: Alignment.center,
                         ),
                       ),
                     ],
                   ),
                 ),
                 //search bar ui
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    height: 60,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                          ),
-                        ],
-                        border: Border.all(
-                          color: Colors.grey,
-                        ),
-                        color: const Color.fromARGB(241, 244, 237, 237),
-                        borderRadius: BorderRadius.circular(30)),
-                    child: SizedBox(
-                      width: 100,
-                      child: Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.search,
-                              )),
-                          const Text(
-                            'Search',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                CsearchBar(),
                 const SizedBox(
                   height: 20,
                 ),
                 Expanded(
                     //height: 500,
-                    child: ListView.builder(
-                        itemCount: 20,
-                        itemBuilder: (context, i) => Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child:
-                                  ListData(text: 'text', imageUrl: 'imageUrl'),
-                            )))
+                    child: data.newData.isEmpty
+                        ? const SizedBox(child: Text('Add Data'))
+                        : ListView.builder(
+                            itemCount: data.newData.length,
+                            itemBuilder: (context, i) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 8.0),
+                                  child: ListData(
+                                      text: data.newData[i][0].toString(),
+                                      imageUrl:
+                                          'https://www.google.com/s2/favicons?sz=64&domain_url=yahoo.com'),
+                                )))
               ],
             ),
           ),
@@ -96,7 +70,10 @@ class Homepage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => showDialogBox(
-            context: context, controller: controllerText, onPressed: () {}),
+          context: context,
+          controller: controllerText,
+          onPressed: () => data.sendData(controllerText.text, context),
+        ),
         child: const Icon(Icons.add),
       ),
     );

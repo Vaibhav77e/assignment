@@ -23,12 +23,15 @@ class ListData extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            CircleAvatar(radius: 20),
+            CircleAvatar(
+              radius: 20,
+              child: Image.network(imageUrl),
+            ),
             const SizedBox(
               width: 10,
             ),
             Text(
-              'The value from post request $text',
+              text,
               style: const TextStyle(overflow: TextOverflow.fade, fontSize: 16),
             ),
           ],
