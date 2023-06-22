@@ -25,7 +25,9 @@ class ListData extends StatelessWidget {
             ),
             CircleAvatar(
               radius: 20,
-              child: Image.network(imageUrl),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(imageUrl)),
             ),
             const SizedBox(
               width: 10,

@@ -5,10 +5,11 @@ import 'package:http/http.dart' as http;
 import '../models/jsonPlace.dart';
 
 class RequestData with ChangeNotifier {
-  List<JsonPlace> _jsData = [];
-
   List newData = [
-    ['title', 'https://www.google.com/s2/favicons?sz=64&domain_url=yahoo.com'],
+    [
+      'add comment',
+      'https://www.google.com/s2/favicons?sz=64&domain_url=yahoo.com'
+    ],
   ];
 
   void addData(String text, BuildContext context) {
@@ -20,10 +21,6 @@ class RequestData with ChangeNotifier {
     notifyListeners();
   }
 
-  List<JsonPlace> get jsData {
-    return [..._jsData];
-  }
-
   // Perform an HTTP GET request
   Future<void> fetchData() async {
     var url = Uri.parse('https://jsonplaceholder.typicode.com/posts');
@@ -31,7 +28,6 @@ class RequestData with ChangeNotifier {
 
     if (response.statusCode == 200) {
       var data = response.body;
-
       print('Response: $data');
       notifyListeners();
     } else {
@@ -57,12 +53,9 @@ class RequestData with ChangeNotifier {
       addData(title, context);
       showSnack(context, 'Sucessfull added');
       notifyListeners();
-      // print('Thumbnail URL: ${parsedData.thumbnailUrl}');
     } else {
       showSnack(context, 'Sucessfull added');
       notifyListeners();
-
-      print('Request failed with status: ${response.statusCode}');
     }
   }
 }
